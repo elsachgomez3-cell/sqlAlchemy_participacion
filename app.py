@@ -47,6 +47,11 @@ def crear():
         price = float(request.form["price"])
         stock = int(request.form["stock"])
 
+        # Mejora: Validación simple antes de guardar
+        if price < 0 or stock < 0:
+            flash("Error: El precio y el stock no pueden ser negativos ❌")
+            return redirect(url_for("crear"))
+
         nuevo = Product(name=name, price=price, stock=stock)
         db.session.add(nuevo)
         db.session.commit()
@@ -61,7 +66,8 @@ def crear():
 # =====================
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
 def editar(id):
-    producto = Product.query.get(id)
+    # Mejora: Uso de db.session.get() en lugar de Product.query.get()
+    producto = db.session.get(Product, id)
 
     if not producto:
         flash("Producto no encontrado ❌")
@@ -84,7 +90,8 @@ def editar(id):
 # =====================
 @app.route("/eliminar/<int:id>")
 def eliminar(id):
-    producto = Product.query.get(id)
+    # Mejora: Uso de db.session.get()
+    producto = db.session.get(Product, id)
 
     if not producto:
         flash("Producto no encontrado ❌")
@@ -99,5 +106,6 @@ def eliminar(id):
 # =====================
 # RUN
 # =====================
+
 if __name__ == "__main__":
     app.run(debug=True)
