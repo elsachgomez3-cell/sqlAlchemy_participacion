@@ -1,0 +1,102 @@
+/* PALETA DE COLORES PROFESIONAL */
+:root {
+    --bg-body: #f8fafc;
+    --sidebar-dark: #1e293b;
+    --primary-blue: #2563eb;
+    --text-main: #334155;
+    --card-white: #ffffff;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* NAVBAR - Más sobria */
+.navbar {
+    background-color: var(--sidebar-dark) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 1rem;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+
+/* DASHBOARD - Tarjetas de métricas */
+.stat-card {
+    background: var(--card-white);
+    color: var(--text-main);
+    border: none;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.stat-card h5 {
+    color: #64748b;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* BUSCADOR - Estilo minimalista */
+input#search {
+    background: white !important;
+    color: var(--text-main) !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+input#search:focus {
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* TARJETAS DE PRODUCTO */
+.product-card {
+    background: var(--card-white);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.product-name {
+    color: #1e293b;
+    font-size: 1.1rem;
+}
+
+/* BADGES (Etiquetas de stock) */
+.badge {
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+.bg-success { background-color: #dcfce7 !important; color: #166534 !important; }
+.bg-warning { background-color: #fef9c3 !important; color: #854d0e !important; }
+.bg-danger { background-color: #fee2e2 !important; color: #991b1b !important; }
+.bg-dark { background-color: #f1f5f9 !important; color: #475569 !important; }
+
+/* BOTONES */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 8px 16px;
+}
+
+.btn-success { background-color: var(--primary-blue); border: none; }
+.btn-success:hover { background-color: #1d4ed8; }
+
+.btn-warning { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+.btn-warning:hover { background-color: #e2e8f0; }

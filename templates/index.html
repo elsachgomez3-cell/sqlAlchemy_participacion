@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="fw-bold mb-4">📦 Panel de Productos</h3>
+
+<!-- DASHBOARD -->
+<div class="row mb-4">
+
+    <div class="col-md-6">
+        <div class="card p-3 shadow stat-card">
+            <h5>Total Productos</h5>
+            <h2>{{ productos|length }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card p-3 shadow stat-card">
+            <h5>Total Stock</h5>
+            <h2>
+                {{ productos | sum(attribute='stock') }}
+            </h2>
+        </div>
+    </div>
+
+</div>
+
+<!-- BUSCADOR -->
+<input type="text" id="search" class="form-control mb-4" placeholder="🔎 Buscar producto...">
+
+<a href="/crear" class="btn btn-success mb-3">➕ Nuevo Producto</a>
+
+<div class="row g-4" id="productList">
+
+{% for p in productos %}
+
+<div class="col-md-4 product-item">
+
+    <div class="card product-card shadow-lg position-relative">
+
+        <!-- ID arriba derecha -->
+        <span class="badge bg-dark position-absolute top-0 end-0 m-2">
+            #{{ p.id }}
+        </span>
+
+        <div class="card-body">
+
+            <h5 class="fw-bold product-name">{{ p.name }}</h5>
+
+            <p>💲 {{ p.price }}</p>
+
+            <p>
+                {% if p.stock > 10 %}
+                    <span class="badge bg-success">Stock: {{ p.stock }}</span>
+                {% elif p.stock > 0 %}
+                    <span class="badge bg-warning">Stock: {{ p.stock }}</span>
+                {% else %}
+                    <span class="badge bg-danger">Sin stock</span>
+                {% endif %}
+            </p>
+
+            <div class="d-flex justify-content-between">
+                <a href="/editar/{{ p.id }}" class="btn btn-warning btn-sm">✏</a>
+                <a href="/eliminar/{{ p.id }}" class="btn btn-danger btn-sm">🗑</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- SCRIPT BUSCADOR -->
+<script>
+document.getElementById("search").addEventListener("keyup", function(){
+    let value = this.value.toLowerCase();
+
+    document.querySelectorAll(".product-item").forEach(function(item){
+        let name = item.querySelector(".product-name").textContent.toLowerCase();
+        let id = item.innerText.toLowerCase();
+
+        if (name.includes(value) || id.includes(value)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    });
+});
+</script>
+
+{% endblock %}
