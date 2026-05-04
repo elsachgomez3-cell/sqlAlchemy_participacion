@@ -1,47 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>SISTEMA DE INVENTARIO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario | Gestión Profesional</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<nav class="navbar navbar-dark shadow bg-dark">
-    <div class="container-fluid">
-        <span class="navbar-brand fw-bold">💻 VENTA DE PRODUCTOS</span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
+            <i class="bi bi-box-seam me-2"></i> 
+            <span>INVENTARIO PRO</span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/"><i class="bi bi-house-door me-1"></i> Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/crear"><i class="bi bi-plus-circle me-1"></i> Añadir Producto</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
-<div class="container mt-4">
+<div class="container mt-5">
 
-    <!-- 🔔 MENSAJES FLASH -->
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="alert alert-success text-center shadow">
-          {{ messages[0] }}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ 'success' if category == 'message' else category }} alert-dismissible fade show shadow-sm border-0" role="alert">
+                    <i class="bi {{ 'bi-check-circle-fill' if category == 'message' else 'bi-exclamation-triangle-fill' }} me-2"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
         </div>
-      {% endif %}
-    {% endwith %}
+    </div>
 
-    <!-- 🔥 CONTENIDO DINÁMICO -->
-    {% block content %}
-    {% endblock %}
+    <main class="animate-fade-in">
+        {% block content %}
+        {% endblock %}
+    </main>
 
 </div>
 
-<!-- ⏱ AUTO OCULTAR ALERTA -->
+<footer class="text-center py-4 mt-5 text-muted border-top">
+    <small>&copy; 2026 Sistema de Gestión de Productos - Ingeniería de Sistemas</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-setTimeout(() => {
-  let alert = document.querySelector(".alert");
-  if(alert){
-    alert.style.opacity = "0";
-    setTimeout(() => alert.style.display = "none", 500);
-  }
-}, 3000);
+    document.addEventListener("DOMContentLoaded", function() {
+        const alerts = document.querySelectorAll(".alert");
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.style.transition = "opacity 0.8s ease";
+                alert.style.opacity = "0";
+                setTimeout(() => alert.remove(), 800);
+            }, 4000);
+        });
+    });
 </script>
 
 </body>
